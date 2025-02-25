@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     public float recoilForce = 5f;
+    [SerializeField]
+    private float kickBackMultiplier;
 
 
     // Start is called before the first frame update
@@ -24,6 +26,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 force = transform.right*recoilForce;
         Debug.Log("force calculated: "+force);
-        rb.AddForce(-force, ForceMode2D.Impulse);
+        rb.AddForce(-force*kickBackMultiplier, ForceMode2D.Impulse);
     }
 }

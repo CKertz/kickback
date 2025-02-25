@@ -15,6 +15,9 @@ public class GunController : MonoBehaviour
     private float interval;
 
     [SerializeField]
+    private TextMeshProUGUI missedShotText;
+
+    [SerializeField]
     public float hitChance;
 
     [Header("Events")]
@@ -32,6 +35,10 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
+        if (missedShotText != null)
+        {
+            missedShotText.text = "Missed shot count: " + missCounter.ToString();
+        }
 
     }
 
@@ -64,19 +71,32 @@ public class GunController : MonoBehaviour
             if (RollHitChance())
             {
                // Debug.Log("sent value is true");
+               //used in pf_bullet: bulletController.setHitStatus
                 onGunFired.Raise(this, true);
 
             }
             else
             {
-               // Debug.Log("sent value is false");
-
+                // Debug.Log("sent value is false");
+                //used in pf_bullet: bulletController.setHitStatus
                 onGunFired.Raise(this, false);
 
                 CircleCollider2D collider = bullet.GetComponent<CircleCollider2D>();
                 collider.isTrigger = false;
-                missCounter++;
-                Debug.Log("shot missed! misscounter incremented to " + missCounter);
+                if(missedShotText != null)
+                {
+                    if(missCounter <= 9)
+                    {
+                        missCounter++;
+                        missedShotText.text = "Missed shot count: " + missCounter.ToString();
+                        Debug.Log("shot missed! misscounter incremented to " + missCounter);
+                    }
+                    else
+                    {
+                        missedShotText.text = "Missed shot count: " + missCounter.ToString() + ", big shot ready";
+                        Debug.Log("misscounter is 10, big shot ready");
+                    }
+                }
             }
 
         }

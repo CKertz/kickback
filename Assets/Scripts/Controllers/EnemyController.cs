@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -8,12 +9,21 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed;
     public float enemyHealth = 10f;
 
+    //temp placeholder while testing
+    [SerializeField]
+    private TextMeshProUGUI enemyHealthText;
+
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player").transform; // Find the player by tag
+
+        if (enemyHealthText != null)
+        {
+            enemyHealthText.text = "Enemy Health: " + enemyHealth.ToString();
+        }
     }
 
     void Update()
@@ -29,15 +39,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void InflictDamage()
+    public void InflictDamage(int damageCount)
     {
-        enemyHealth -= 1;
+        enemyHealth -= damageCount;
         if (enemyHealth <= 0)
         {
             Debug.Log("health is zero:" + enemyHealth);
             Destroy(gameObject);
             return;
         }
-        Debug.Log("enemy health decremented by 1. now:" + enemyHealth);
+        Debug.Log("enemy health decremented. now:" + enemyHealth);
+        if (enemyHealthText != null)
+        {
+            enemyHealthText.text = "Enemy Health: " + enemyHealth.ToString();
+        }
+
+
     }
 }

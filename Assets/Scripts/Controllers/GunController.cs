@@ -9,6 +9,9 @@ public class GunController : MonoBehaviour
     private GameObject bulletPrefab;
 
     [SerializeField]
+    private GameObject bigBulletPrefab;
+
+    [SerializeField]
     private float bulletSpeed;
 
     [SerializeField]
@@ -28,6 +31,7 @@ public class GunController : MonoBehaviour
     private bool inRange = false;
     private float timer = 0f;
     private Transform target;
+    private bool isBigShotAvailable = false;
 
 
 
@@ -54,6 +58,11 @@ public class GunController : MonoBehaviour
 
                 timer = 0f; // Reset the timer after executing the function
             }
+        }
+
+        if (isBigShotAvailable && Input.GetKeyUp(KeyCode.Space))
+        {
+            FireBigShot();
         }
     }
 
@@ -94,6 +103,7 @@ public class GunController : MonoBehaviour
                     else
                     {
                         missedShotText.text = "Missed shot count: " + missCounter.ToString() + ", big shot ready";
+                        isBigShotAvailable = true;
                         Debug.Log("misscounter is 10, big shot ready");
                     }
                 }
@@ -101,6 +111,25 @@ public class GunController : MonoBehaviour
 
         }
     }
+
+    private void FireBigShot()
+    {
+        if (isBigShotAvailable)
+        {
+            GameObject bigShot = Instantiate(bigBulletPrefab, transform.position, Quaternion.identity);
+            Rigidbody2D rb = bigShot.GetComponent<Rigidbody2D>();
+            Vector2 direction = (target.position - transform.position).normalized;
+
+            if (rb != null)
+            {
+                rb.velocity = direction * 2*bulletSpeed; //doubling the bigshot speed compared to regular because why not
+            }
+
+            isBigShotAvailable = false;
+            missCounter = 0;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))

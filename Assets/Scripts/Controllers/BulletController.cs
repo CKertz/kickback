@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -23,12 +24,20 @@ public class BulletController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
+            var enemyScript = collision.gameObject.GetComponent<EnemyController>();
+            if (gameObject.tag == "bigshot")
+            {
+                if (enemyScript != null)
+                {
+                    enemyScript.InflictDamage(3);
+                    Destroy(gameObject);
+                }
+            }
 
             //Debug.Log("enemy hit");
-            var enemyScript = collision.gameObject.GetComponent<EnemyController>();
             if (enemyScript != null && hitStatus)
             {
-                enemyScript.InflictDamage();
+                enemyScript.InflictDamage(1);
                 Destroy(gameObject);
             }
 

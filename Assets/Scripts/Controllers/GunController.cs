@@ -23,6 +23,13 @@ public class GunController : MonoBehaviour
     [SerializeField]
     public float hitChance;
 
+    [SerializeField]
+    public float ammoCount;
+
+    [SerializeField]
+    private TextMeshProUGUI ammoCountText;
+
+
     [Header("Events")]
     public GameEvent onGunFired;
 
@@ -42,6 +49,11 @@ public class GunController : MonoBehaviour
         if (missedShotText != null)
         {
             missedShotText.text = "Missed shot count: " + missCounter.ToString();
+        }
+
+        if (ammoCountText != null)
+        {
+            ammoCountText.text = "Ammo count: " + ammoCount.ToString();
         }
 
     }
@@ -71,8 +83,21 @@ public class GunController : MonoBehaviour
         if (target != null && bulletPrefab != null)
         {
             Vector2 direction = (target.position - transform.position).normalized;
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector3 bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f);
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            
+            if (ammoCount <= 0)
+            {
+                Debug.Log("out of ammo!");
+                return;
+            }
+            else
+            {
+                ammoCount -= 1;
+                ammoCountText.text = "Ammo count: " + ammoCount.ToString();
+            }
+
             if (rb != null)
             {
                 rb.velocity = direction * bulletSpeed;

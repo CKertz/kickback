@@ -28,15 +28,16 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
-        {
-            // Calculate direction to move towards the player
-            Vector2 direction = player.position - transform.position;
-  //          direction.Normalize(); // Normalize to get a unit vector
+        //temp commenting movement out while testing
 
-            // Move the enemy towards the player
-            rb.velocity = direction * moveSpeed;
-        }
+        //if (player != null)
+        //{
+        //    // Calculate direction to move towards the player
+        //    Vector2 direction = player.position - transform.position;
+
+        //    // Move the enemy towards the player
+        //    rb.velocity = direction * moveSpeed;
+        //}
     }
 
     public void InflictDamage(int damageCount)

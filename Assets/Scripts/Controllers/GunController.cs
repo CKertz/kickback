@@ -33,6 +33,9 @@ public class GunController : MonoBehaviour
     [Header("Events")]
     public GameEvent onGunFired;
 
+    [Header("Events")]
+    public GameEvent onBigShotFired;
+
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
     private bool inRange = false;
@@ -144,6 +147,7 @@ public class GunController : MonoBehaviour
             GameObject bigShot = Instantiate(bigBulletPrefab, transform.position, Quaternion.identity);
             Rigidbody2D rb = bigShot.GetComponent<Rigidbody2D>();
             Vector2 direction = (target.position - transform.position).normalized;
+            onBigShotFired.Raise(this, gameObject);
 
             if (rb != null)
             {

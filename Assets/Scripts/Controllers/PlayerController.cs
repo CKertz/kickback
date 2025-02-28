@@ -22,10 +22,18 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    //has a game event listener on the player for OnGunFired
     public void ApplyRecoilForce()
     {
         Vector2 force = transform.right*recoilForce;
-        Debug.Log("force calculated: "+force);
         rb.AddForce(-force*kickBackMultiplier, ForceMode2D.Impulse);
+    }
+
+    //has a game event listener on the player for OnBigShotFired
+    public void ApplyRecoilForceBigShot()
+    {
+        Debug.Log("bigshot recoil applied");
+        Vector2 force = transform.right * recoilForce * 2;
+        rb.AddForce(-force * kickBackMultiplier, ForceMode2D.Impulse);
     }
 }

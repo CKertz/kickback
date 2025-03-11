@@ -30,14 +30,14 @@ public class EnemyController : MonoBehaviour
     {
         //temp commenting movement out while testing
 
-        //if (player != null)
-        //{
-        //    // Calculate direction to move towards the player
-        //    Vector2 direction = player.position - transform.position;
+        if (player != null)
+        {
+            // Calculate direction to move towards the player
+            Vector2 direction = player.position - transform.position;
 
-        //    // Move the enemy towards the player
-        //    rb.velocity = direction * moveSpeed;
-        //}
+            // Move the enemy towards the player
+            rb.velocity = direction * moveSpeed;
+        }
     }
 
     public void InflictDamage(int damageCount)

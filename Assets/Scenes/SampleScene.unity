@@ -1033,6 +1033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recoilForce: 5
   kickBackMultiplier: 0.5
+  playerHealth: 1000
 --- !u!212 &1442122219
 SpriteRenderer:
   m_ObjectHideFlags: 0

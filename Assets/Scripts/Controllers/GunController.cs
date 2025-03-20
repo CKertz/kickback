@@ -15,7 +15,7 @@ public class GunController : MonoBehaviour
     private float bulletSpeed;
 
     [SerializeField]
-    private float interval;
+    private float shotDownTime;
 
     [SerializeField]
     private TextMeshProUGUI missedShotText;
@@ -43,8 +43,6 @@ public class GunController : MonoBehaviour
     private Transform target;
     private bool isBigShotAvailable = false;
 
-
-
     private int missCounter = 0;
 
     void Start()
@@ -67,7 +65,7 @@ public class GunController : MonoBehaviour
         {
             timer += Time.deltaTime; // Increment the timer while in range
 
-            if (timer >= interval)
+            if (timer >= shotDownTime)
             {
                 FireGun();
 

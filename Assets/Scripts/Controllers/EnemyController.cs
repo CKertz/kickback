@@ -1,3 +1,4 @@
+using Assets.Scripts.Models;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,9 +15,12 @@ public class EnemyController : MonoBehaviour
     private TextMeshProUGUI enemyHealthText;
 
     private Rigidbody2D rb;
+    private int enemyId;
 
     void Start()
     {
+        LogNewEnemy();
+
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player").transform; // Find the player by tag
 
@@ -40,6 +44,25 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void LogNewEnemy()
+    {
+        var newEnemy = new Enemy();
+        newEnemy.enemyMaxHealth = enemyHealth;
+        newEnemy.enemyName = gameObject.name;
+        newEnemy.enemyMovementSpeed = moveSpeed;
+        newEnemy.isAlive = true;
+        var enemyIdCounter = DataManager.Instance.activeEnemyIdCounter;
+        DataManager.Instance.activeEnemyList.Add(enemyIdCounter, newEnemy);
+        enemyId = DataManager.Instance.activeEnemyIdCounter;
+        
+        DataManager.Instance.activeEnemyIdCounter++;
+        //Debug.Log("enemy logged:");
+        //Debug.Log("enemy name: " + newEnemy.enemyName);
+        //Debug.Log("enemy movementspeed: " + newEnemy.enemyMovementSpeed);
+        //Debug.Log("enemy isalive: " + newEnemy.isAlive);
+        //Debug.Log("enemy enemyId: " + enemyId);
+    }
+
     public void InflictDamage(int damageCount)
     {
         enemyHealth -= damageCount;
@@ -56,5 +79,11 @@ public class EnemyController : MonoBehaviour
         }
 
 
+    }
+
+    public void OnDestroy()
+    {
+        Debug.Log("enemy destruction starting of enemy id: " + enemyId);
+        DataManager.Instance.activeEnemyList.Remove(enemyId);
     }
 }

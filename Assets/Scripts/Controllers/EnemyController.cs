@@ -46,21 +46,29 @@ public class EnemyController : MonoBehaviour
 
     private void LogNewEnemy()
     {
+        var enemyIdCounter = DataManager.Instance.activeEnemyIdCounter;
+
         var newEnemy = new Enemy();
         newEnemy.enemyMaxHealth = enemyHealth;
-        newEnemy.enemyName = gameObject.name;
+        newEnemy.enemyName = gameObject.name + enemyIdCounter;
         newEnemy.enemyMovementSpeed = moveSpeed;
         newEnemy.isAlive = true;
-        var enemyIdCounter = DataManager.Instance.activeEnemyIdCounter;
-        DataManager.Instance.activeEnemyList.Add(enemyIdCounter, newEnemy);
-        enemyId = DataManager.Instance.activeEnemyIdCounter;
-        
+        DataManager.Instance.activeEnemyList.Add(enemyIdCounter, newEnemy);        
         DataManager.Instance.activeEnemyIdCounter++;
+        Debug.Log("active counter is now: " + DataManager.Instance.activeEnemyIdCounter);
+
         //Debug.Log("enemy logged:");
         //Debug.Log("enemy name: " + newEnemy.enemyName);
         //Debug.Log("enemy movementspeed: " + newEnemy.enemyMovementSpeed);
         //Debug.Log("enemy isalive: " + newEnemy.isAlive);
         //Debug.Log("enemy enemyId: " + enemyId);
+
+        SetupEnemyMetaData(enemyIdCounter);
+    }
+
+    private void SetupEnemyMetaData(int enemyIdCounter)
+    {
+        gameObject.name = "enemy" + enemyIdCounter;
     }
 
     public void InflictDamage(int damageCount)

@@ -1,5 +1,7 @@
+using Assets.Scripts.Models;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -37,11 +39,15 @@ public class GunController : MonoBehaviour
     public GameEvent onBigShotFired;
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
+    private Dictionary<GameObject,float> enemyDistanceDictionary = new Dictionary<GameObject,float>();
 
     private bool inRange = false;
     private float timer = 0f;
     private Transform target;
     private bool isBigShotAvailable = false;
+
+    private GameObject closestTarget;
+
 
     private int missCounter = 0;
 
@@ -61,6 +67,8 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
+        CheckClosestTarget();
+
         if (inRange)
         {
             timer += Time.deltaTime; // Increment the timer while in range
@@ -182,7 +190,33 @@ public class GunController : MonoBehaviour
             //target = other.transform;
         }
     }
+    private void CheckClosestTarget()
+    {
+        var spawnedEnemiesList = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(var enemy in spawnedEnemiesList)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
+            if (enemyDistanceDictionary.TryGetValue(enemy, out float existingValue))
+            {
+                if (existingValue != distanceToEnemy)
+                {
+                    enemyDistanceDictionary[enemy] = distanceToEnemy;
+                    Debug.Log($"Updated: {enemy.name} to {distanceToEnemy}");
+                }
+            }
+            else
+            {
+                // If the key doesn't exist, add it
+                enemyDistanceDictionary.Add(enemy, distanceToEnemy);
+                Debug.Log($"Added: {enemy.name} with value {distanceToEnemy}");
+            }
+            //enemyDistanceDictionary.Add(enemy, distanceToEnemy);
+            closestTarget = enemyDistanceDictionary.OrderBy(kvp => kvp.Value).First().Key;
+            Debug.Log("closest target is:" + closestTarget.name);
+
+        }
+    }
     private GameObject GetClosestEnemy()
     {
         GameObject closestEnemy = null;

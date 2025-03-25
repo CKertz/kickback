@@ -43,7 +43,6 @@ public class GunController : MonoBehaviour
 
     private bool inRange = false;
     private float timer = 0f;
-    private Transform target;
     private bool isBigShotAvailable = false;
 
     private GameObject closestTarget;
@@ -75,7 +74,7 @@ public class GunController : MonoBehaviour
 
             if (timer >= shotDownTime)
             {
-                FireGun();
+                FireGun(closestTarget);
 
                 timer = 0f; // Reset the timer after executing the function
             }
@@ -83,15 +82,15 @@ public class GunController : MonoBehaviour
 
         if (isBigShotAvailable && Input.GetKeyUp(KeyCode.Space))
         {
-            FireBigShot();
+            FireBigShot(closestTarget);
         }
     }
 
-    private void FireGun()
+    private void FireGun(GameObject closestEnemy)
     {
-        if (target != null && bulletPrefab != null)
+        if (bulletPrefab != null)
         {
-            Vector2 direction = (target.position - transform.position).normalized;
+            Vector2 direction = (closestEnemy.transform.position - transform.position).normalized;
             Vector3 bulletSpawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f);
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPosition, Quaternion.identity);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -111,7 +110,7 @@ public class GunController : MonoBehaviour
             {
                 rb.velocity = direction * bulletSpeed;
             }
-            if (RollHitChance())
+            if (RollHitChance() && closestEnemy != null)
             {
                // Debug.Log("sent value is true");
                //used in pf_bullet: bulletController.setHitStatus
@@ -146,13 +145,13 @@ public class GunController : MonoBehaviour
         }
     }
 
-    private void FireBigShot()
+    private void FireBigShot(GameObject closestEnemy)
     {
         if (isBigShotAvailable)
         {
             GameObject bigShot = Instantiate(bigBulletPrefab, transform.position, Quaternion.identity);
             Rigidbody2D rb = bigShot.GetComponent<Rigidbody2D>();
-            Vector2 direction = (target.position - transform.position).normalized;
+            Vector2 direction = (closestEnemy.transform.position - transform.position).normalized;
             onBigShotFired.Raise(this, gameObject);
 
             if (rb != null)
@@ -171,22 +170,22 @@ public class GunController : MonoBehaviour
         {
             //Debug.Log("enemy found");
             inRange = true;
-            if (!enemiesInRange.Contains(other.gameObject))
-            {
-                //Debug.Log("enemy added" + other.gameObject.name);
-                enemiesInRange.Add(other.gameObject);
+            //if (!enemiesInRange.Contains(other.gameObject))
+            //{
+            //    //Debug.Log("enemy added" + other.gameObject.name);
+            //    enemiesInRange.Add(other.gameObject);
 
-                if (enemiesInRange.Count > 1)
-                {
-                    target = GetClosestEnemy().transform;
-                    Debug.Log("multiple enemies in range, target selected is" + target.name);
-                }
-                else
-                {
-                    target = other.transform;
-                }
-                //other.gameObject.GetComponent<EnemyController>().InflictDamage();
-            }
+            //    if (enemiesInRange.Count > 1)
+            //    {
+            //        target = GetClosestEnemy().transform;
+            //        Debug.Log("multiple enemies in range, target selected is" + target.name);
+            //    }
+            //    else
+            //    {
+            //        target = other.transform;
+            //    }
+            //    //other.gameObject.GetComponent<EnemyController>().InflictDamage();
+            //}
             //target = other.transform;
         }
     }

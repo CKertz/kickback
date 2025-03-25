@@ -285,7 +285,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206498503
 GameObject:
@@ -559,10 +559,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8661294857364495488, guid: 658c1ee2b561f794ca4a06248fc8444b, type: 3}
   bigBulletPrefab: {fileID: 7923050257570648377, guid: 623375011e42a654aa26dd1e802c3f69, type: 3}
   bulletSpeed: 10
-  shotDownTime: 0
+  shotDownTime: 0.1
   missedShotText: {fileID: 744029978}
-  hitChance: 90
-  ammoCount: 15
+  hitChance: 10
+  ammoCount: 100
   ammoCountText: {fileID: 1551356834}
   onGunFired: {fileID: 11400000, guid: bf42755c963d0f348b0f2a7bb71664f7, type: 2}
   onBigShotFired: {fileID: 11400000, guid: 5f2a433d4741ef742abad97c7727fdb4, type: 2}
@@ -783,7 +783,7 @@ Transform:
   m_Children:
   - {fileID: 2027883237}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &744029976
 GameObject:
@@ -949,7 +949,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1302553923
 GameObject:
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recoilForce: 5
-  kickBackMultiplier: 0.5
+  kickBackMultiplier: 0.1
   playerHealth: 1000
 --- !u!212 &1442122219
 SpriteRenderer:
@@ -1236,9 +1236,8 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 1820963571}
   - {fileID: 1302553924}
-  - {fileID: 2097923931}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1551356832
 GameObject:
@@ -1541,7 +1540,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2087120361
 GameObject:
@@ -1651,13 +1650,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097923930}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10765.483, y: 2143.096, z: -70.71718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1545229722}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2097923932
 MonoBehaviour:
@@ -1705,7 +1704,7 @@ Transform:
   - {fileID: 2087120362}
   - {fileID: 1442122220}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1924130309279962126
 PrefabInstance:
@@ -1764,7 +1763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1924130307935276206, guid: c0fc547e102cbfb4d8866fe4e8a8063a, type: 3}
       propertyPath: moveSpeed
-      value: 1
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 1924130307935276206, guid: c0fc547e102cbfb4d8866fe4e8a8063a, type: 3}
       propertyPath: enemyHealthText

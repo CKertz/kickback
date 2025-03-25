@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour
         newEnemy.enemyName = gameObject.name + enemyIdCounter;
         newEnemy.enemyMovementSpeed = moveSpeed;
         newEnemy.isAlive = true;
+        newEnemy.enemyId = enemyIdCounter;
         DataManager.Instance.activeEnemyList.Add(enemyIdCounter, newEnemy);        
         DataManager.Instance.activeEnemyIdCounter++;
         Debug.Log("active counter is now: " + DataManager.Instance.activeEnemyIdCounter);
